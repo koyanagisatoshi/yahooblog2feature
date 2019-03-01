@@ -1,0 +1,54 @@
+name:                Haskell
+version:             0.1.0.0
+github:              "githubuser/Haskell"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2019 Author name here"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/Haskell#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- split # [20190123_15:52] ADD for splitOn. Solve "hidden package problem".
+- text
+- regex-base # [20190215_12:41] I understand that "package.yaml のここに記述する名称は、Hackageで調べるんだと。"
+- regex-posix # regex-baseのバックエンド
+- regex-compat-tdfa #[20190215_16:51]subRegex エラー対処版(Text.Regex.Posix.String died: (ReturnCode 17,"illegal byte sequence"))
+- process #[20190215_17:58]外部コマンド( mecab -b 81920 blog.age.test.tsv > blog.age.test.tsv.mecabed)をキックするため。
+
+library:
+  source-dirs: src
+
+executables:
+  Haskell-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - Haskell
+
+tests:
+  Haskell-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - Haskell
